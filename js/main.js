@@ -158,14 +158,50 @@ var filters = {
   tools: []
 };
 
+function isInArray(array, value) {
+  found = false;
+  for (var m=0; m<array.length;m++) {
+    if (array[m] === value) {
+      found = true;
+    }
+  }
+  return found;
+}
+
 function addFilter(filter) {
-  if (filter.role != "") {
+  if (filter.role != "" && filter.role != null) {
     filters.role = filter.role;
+    filterDiv = document.createElement("div");
+      filterDiv.classList.add("filter");
+      filterButton = document.createElement("div");
+      filterButton.classList.add("filterButton");
+      filterButton.innerHTML = filter.role;
+      deleteButton = document.createElement("div");
+      deleteButton.classList.add("deleteButton")
+      crossImg = document.createElement("img");
+      crossImg.setAttribute("src", "./images/icon-remove.svg");
+      deleteButton.appendChild(crossImg);
+      filterDiv.appendChild(filterButton);
+      filterDiv.appendChild(deleteButton);
+      document.getElementsByClassName("filterBox")[0].appendChild(filterDiv);
   }
-  if (filter.level != "") {
+  if (filter.level != "" && filter.level != null) {
     filters.level = filter.level;
+    filterDiv = document.createElement("div");
+      filterDiv.classList.add("filter");
+      filterButton = document.createElement("div");
+      filterButton.classList.add("filterButton");
+      filterButton.innerHTML = filter.level;
+      deleteButton = document.createElement("div");
+      deleteButton.classList.add("deleteButton")
+      crossImg = document.createElement("img");
+      crossImg.setAttribute("src", "./images/icon-remove.svg");
+      deleteButton.appendChild(crossImg);
+      filterDiv.appendChild(filterButton);
+      filterDiv.appendChild(deleteButton);
+      document.getElementsByClassName("filterBox")[0].appendChild(filterDiv);
   }
-  if (filter.language != "") {
+  if (filter.language != "" && filter.language != null) {
     let found = false;
     for (i = 0; i < filters.languages.length; i++) {
       if (filters.languages[i] === filter.language) {
@@ -174,9 +210,22 @@ function addFilter(filter) {
     }
     if (!found) {
       filters.languages.push(filter.language);
+      filterDiv = document.createElement("div");
+      filterDiv.classList.add("filter");
+      filterButton = document.createElement("div");
+      filterButton.classList.add("filterButton");
+      filterButton.innerHTML = filter.language;
+      deleteButton = document.createElement("div");
+      deleteButton.classList.add("deleteButton")
+      crossImg = document.createElement("img");
+      crossImg.setAttribute("src", "./images/icon-remove.svg");
+      deleteButton.appendChild(crossImg);
+      filterDiv.appendChild(filterButton);
+      filterDiv.appendChild(deleteButton);
+      document.getElementsByClassName("filterBox")[0].appendChild(filterDiv);
     }
   }
-  if (filter.tool != "") {
+  if (filter.tool != "" && filter.tool != null) {
     let found = false;
     for (i = 0; i < filters.tools.length; i++) {
       if (filters.tools[i] === filter.tool) {
@@ -185,6 +234,19 @@ function addFilter(filter) {
     }
     if (!found) {
       filters.tools.push(filter.tool);
+      filterDiv = document.createElement("div");
+      filterDiv.classList.add("filter");
+      filterButton = document.createElement("div");
+      filterButton.classList.add("filterButton");
+      filterButton.innerHTML = filter.tool;
+      deleteButton = document.createElement("div");
+      deleteButton.classList.add("deleteButton")
+      crossImg = document.createElement("img");
+      crossImg.setAttribute("src", "./images/icon-remove.svg");
+      deleteButton.appendChild(crossImg);
+      filterDiv.appendChild(filterButton);
+      filterDiv.appendChild(deleteButton);
+      document.getElementsByClassName("filterBox")[0].appendChild(filterDiv);
     }
   }
 }
@@ -323,14 +385,64 @@ function renderOffer(tableIndex) {
 
 function filterOffers(operation, selectedFilter) {
   var filteredOffers = [...data];
+
+  
+  console.log(filteredOffers);
   if (operation === "addFilter") {
     addFilter(selectedFilter);
   } else {
     removeFilter(selectedFilter);
   }
-  if (filters.role != "") {
+  console.log(filters);
+  // Filter offers
+  if (filters.role != "" && filters.role != null) {
     for (i = 0; i < filteredOffers.length; i++) {
-      filteredOffers = [...data];
+      if (filteredOffers[i].role != filters.role) {
+        filteredOffers.splice(i, 1)
+        i--;
+      }
     }
-  } 
-}
+  }
+  if (filters.level != "" && filters.level != null) {
+    for (i = 0; i < filteredOffers.length; i++) {
+      if (filteredOffers[i].level != filters.level) {
+        filteredOffers.splice(i, 1)
+        i--;
+      }
+    }
+  }
+
+  if (filters.languages.length > 0 && filters.languages[0] != null) {
+    for (i = 0; i < filteredOffers.length; i++) {
+      for (j = 0; j < filters.languages.length; j++) {
+        if (!isInArray(filteredOffers[i].languages, filters.languages[j])) {
+          filteredOffers.splice(i, 1);
+          i--;
+        }
+      }
+    }
+  }
+
+  if (filters.tools.length > 0 && filters.tools[0] != null) {
+    for (i = 0; i < filteredOffers.length; i++) {
+      for (j = 0; j < filters.tools.length; j++) {
+        if (!isInArray(filteredOffers[i].tools, filters.tools[j])) {
+          filteredOffers.splice(i, 1);
+          i--;
+        }
+      }
+    }
+  }
+
+  // Render filtered offers
+  // First, remove all childs of offersDiv
+  var offersDiv = document.getElementsByClassName("offersDiv")[0];
+  for (i = 0; i < offersDiv.childNodes.length; i++) {
+    offersDiv.removeChild(offersDiv.childNodes[i]);
+    i--;
+  }
+  console.log(filteredOffers);
+  for (i = 0; i < filteredOffers.length; i++) {
+    renderOffer(filteredOffers[i].id - 1);
+  }
+} 

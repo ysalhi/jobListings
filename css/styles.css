@@ -18,6 +18,58 @@ body {
     visibility: hidden;
 }
 
+.mainContainer .filtersDiv {
+    background-color: hsl(180, 52%, 96%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.mainContainer .filtersDiv .filterBox {
+    display: flex;
+    background-color: white;
+    width: calc(70% + 3.6rem);
+    border-radius: 5px;
+    position: absolute;
+    box-shadow: 9px 7px 15px -3px hsl(180, 8%, 52%);
+    top: -30px;
+}
+
+.mainContainer .filtersDiv .filterBox .filter {
+    display:flex;
+    margin: 0.8rem;
+    margin-left: 2rem;
+    cursor: pointer;
+}
+
+.mainContainer .filtersDiv .filterBox .filter .filterButton {
+    background-color: hsl(180, 52%, 96%);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: hsl(180, 29%, 50%);
+    font-weight: 500;
+    font-size: 0.7rem;
+    padding: 10px;
+    flex-shrink: 0;
+    font-weight: 500;
+}
+
+.mainContainer .filtersDiv .filterBox .filter .deleteButton {
+    background-color: hsl(180, 29%, 50%);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+.mainContainer .filtersDiv .filterBox .filter .deleteButton:hover {
+    background-color: hsl(180, 8%, 52%);
+}
+
 .mainContainer .offersDiv {
     background-color: hsl(180, 52%, 96%);
     width: 100%;
