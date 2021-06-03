@@ -181,6 +181,7 @@ function addFilter(filter) {
       crossImg = document.createElement("img");
       crossImg.setAttribute("src", "./images/icon-remove.svg");
       deleteButton.appendChild(crossImg);
+      deleteButton.setAttribute("onclick", `filterOffers("removeFilter", { role : "${filter.role}"})`);
       filterDiv.appendChild(filterButton);
       filterDiv.appendChild(deleteButton);
       document.getElementsByClassName("filterBox")[0].appendChild(filterDiv);
@@ -197,6 +198,7 @@ function addFilter(filter) {
       crossImg = document.createElement("img");
       crossImg.setAttribute("src", "./images/icon-remove.svg");
       deleteButton.appendChild(crossImg);
+      deleteButton.setAttribute("onclick", `filterOffers("removeFilter", { level : "${filter.level}"})`);
       filterDiv.appendChild(filterButton);
       filterDiv.appendChild(deleteButton);
       document.getElementsByClassName("filterBox")[0].appendChild(filterDiv);
@@ -220,6 +222,7 @@ function addFilter(filter) {
       crossImg = document.createElement("img");
       crossImg.setAttribute("src", "./images/icon-remove.svg");
       deleteButton.appendChild(crossImg);
+      deleteButton.setAttribute("onclick", `filterOffers("removeFilter", { language : "${filter.language}"})`);
       filterDiv.appendChild(filterButton);
       filterDiv.appendChild(deleteButton);
       document.getElementsByClassName("filterBox")[0].appendChild(filterDiv);
@@ -244,6 +247,7 @@ function addFilter(filter) {
       crossImg = document.createElement("img");
       crossImg.setAttribute("src", "./images/icon-remove.svg");
       deleteButton.appendChild(crossImg);
+      deleteButton.setAttribute("onclick", `filterOffers("removeFilter", { tool : "${filter.tool}"})`);
       filterDiv.appendChild(filterButton);
       filterDiv.appendChild(deleteButton);
       document.getElementsByClassName("filterBox")[0].appendChild(filterDiv);
@@ -252,19 +256,43 @@ function addFilter(filter) {
 }
 
 function removeFilter(filter) {
-  if (filter.role != "") {
+  if (filter.role != "" && filter.role != null) {
+    [].forEach.call(document.getElementsByClassName("filterBox")[0].childNodes, function(child) {
+
+      if (child.hasChildNodes && child.nodeName != "#text" && child.childNodes[0].innerHTML === filter.role) {
+        document.getElementsByClassName("filterBox")[0].removeChild(child);
+      }
+    });
     filters.role = "";
   }
-  if (filter.level != "") {
+  if (filter.level != "" && filter.level != null) {
+    [].forEach.call(document.getElementsByClassName("filterBox")[0].childNodes, function(child) {
+
+      if (child.hasChildNodes && child.nodeName != "#text" && child.childNodes[0].innerHTML === filter.level) {
+        document.getElementsByClassName("filterBox")[0].removeChild(child);
+      }
+    });
     filters.level = "";
   }
-  if (filter.language != "") {
+  if (filter.language != "" && filter.language != null) {
+    [].forEach.call(document.getElementsByClassName("filterBox")[0].childNodes, function(child) {
+
+      if (child.hasChildNodes && child.nodeName != "#text" && child.childNodes[0].innerHTML === filter.language) {
+        document.getElementsByClassName("filterBox")[0].removeChild(child);
+      }
+    });
     let i = filters.languages.indexOf(filter.language);
     if (i > -1) {
       filters.languages.splice(i, 1);
     }
   }
-  if (filter.tool != "") {
+  if (filter.tool != "" && filter.tool != null) {
+    [].forEach.call(document.getElementsByClassName("filterBox")[0].childNodes, function(child) {
+
+      if (child.hasChildNodes && child.nodeName != "#text" && child.childNodes[0].innerHTML === filter.tool) {
+        document.getElementsByClassName("filterBox")[0].removeChild(child);
+      }
+    });
     let i = filters.tools.indexOf(filter.tool);
     if (i > -1) {
       filters.tools.splice(i, 1);
@@ -358,10 +386,12 @@ function renderOffer(tableIndex) {
   var role = document.createElement("div");
   role.classList.add("tag");
   role.innerHTML = data[tableIndex].role;
+  role.setAttribute("onclick", `filterOffers("addFilter", { role : "${data[tableIndex].role}"})`);
 
   var level = document.createElement("div");
   level.classList.add("tag");
   level.innerHTML = data[tableIndex].level;
+  level.setAttribute("onclick", `filterOffers("addFilter", { level : "${data[tableIndex].level}"})`);
 
   tagsDiv.appendChild(role);
   tagsDiv.appendChild(level);
@@ -370,6 +400,7 @@ function renderOffer(tableIndex) {
     language = document.createElement("div");
     language.classList.add("tag");
     language.innerHTML = data[tableIndex].languages[j];
+    language.setAttribute("onclick", `filterOffers("addFilter", { language : "${data[tableIndex].languages[j]}"})`);
     tagsDiv.appendChild(language);
   }
 
@@ -377,6 +408,7 @@ function renderOffer(tableIndex) {
     tool = document.createElement("div");
     tool.classList.add("tag");
     tool.innerHTML = data[tableIndex].tools[k];
+    tool.setAttribute("onclick", `filterOffers("addFilter", { tool : "${data[tableIndex].tools[k]}"})`);
     tagsDiv.appendChild(tool);
   }
 
@@ -387,13 +419,11 @@ function filterOffers(operation, selectedFilter) {
   var filteredOffers = [...data];
 
   
-  console.log(filteredOffers);
   if (operation === "addFilter") {
     addFilter(selectedFilter);
   } else {
     removeFilter(selectedFilter);
   }
-  console.log(filters);
   // Filter offers
   if (filters.role != "" && filters.role != null) {
     for (i = 0; i < filteredOffers.length; i++) {
@@ -441,7 +471,6 @@ function filterOffers(operation, selectedFilter) {
     offersDiv.removeChild(offersDiv.childNodes[i]);
     i--;
   }
-  console.log(filteredOffers);
   for (i = 0; i < filteredOffers.length; i++) {
     renderOffer(filteredOffers[i].id - 1);
   }

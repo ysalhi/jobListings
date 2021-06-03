@@ -31,18 +31,18 @@ body {
 .mainContainer .filtersDiv .filterBox {
     display: flex;
     background-color: white;
-    width: calc(70% + 3.6rem);
+    width: calc(70% + 1.6rem);
     border-radius: 5px;
     position: absolute;
     box-shadow: 9px 7px 15px -3px hsl(180, 8%, 52%);
     top: -30px;
+    padding-left: 2rem;
 }
 
 .mainContainer .filtersDiv .filterBox .filter {
     display:flex;
     margin: 0.8rem;
-    margin-left: 2rem;
-    cursor: pointer;
+    margin-left: 0.3rem;
 }
 
 .mainContainer .filtersDiv .filterBox .filter .filterButton {
@@ -65,9 +65,10 @@ body {
     align-items: center;
     justify-content: center;
     padding: 5px;
+    cursor: pointer;
 }
 .mainContainer .filtersDiv .filterBox .filter .deleteButton:hover {
-    background-color: hsl(180, 8%, 52%);
+    background-color: hsl(180, 14%, 20%);
 }
 
 .mainContainer .offersDiv {
@@ -181,6 +182,7 @@ body {
     flex-shrink: 0;
     font-weight: 500;
     margin-left: 1rem;
+    cursor: pointer;
 }
 
 .attribution { 
