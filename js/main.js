@@ -443,7 +443,7 @@ function filterOffers(operation, selectedFilter) {
   }
 
   if (filters.languages.length > 0 && filters.languages[0] != null) {
-    for (i = 0; i < filteredOffers.length; i++) {
+    for (i = filteredOffers.length - 1; i >= 0; i--) {
       for (j = 0; j < filters.languages.length; j++) {
         if (!isInArray(filteredOffers[i].languages, filters.languages[j])) {
           filteredOffers.splice(i, 1);
@@ -454,11 +454,10 @@ function filterOffers(operation, selectedFilter) {
   }
 
   if (filters.tools.length > 0 && filters.tools[0] != null) {
-    for (i = 0; i < filteredOffers.length; i++) {
+    for (i = filteredOffers.length - 1; i >= 0; i--) {
       for (j = 0; j < filters.tools.length; j++) {
         if (!isInArray(filteredOffers[i].tools, filters.tools[j])) {
           filteredOffers.splice(i, 1);
-          i--;
         }
       }
     }
