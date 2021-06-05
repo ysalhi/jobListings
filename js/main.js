@@ -426,7 +426,7 @@ function filterOffers(operation, selectedFilter) {
   }
   // Filter offers
   if (filters.role != "" && filters.role != null) {
-    for (i = 0; i < filteredOffers.length; i++) {
+    for (i = filteredOffers.length - 1; i >= 0; i--) {
       if (filteredOffers[i].role != filters.role) {
         filteredOffers.splice(i, 1)
         i--;
@@ -434,10 +434,9 @@ function filterOffers(operation, selectedFilter) {
     }
   }
   if (filters.level != "" && filters.level != null) {
-    for (i = 0; i < filteredOffers.length; i++) {
+    for (i = filteredOffers.length - 1; i >= 0; i--) {
       if (filteredOffers[i].level != filters.level) {
         filteredOffers.splice(i, 1)
-        i--;
       }
     }
   }
@@ -447,7 +446,7 @@ function filterOffers(operation, selectedFilter) {
       for (j = 0; j < filters.languages.length; j++) {
         if (!isInArray(filteredOffers[i].languages, filters.languages[j])) {
           filteredOffers.splice(i, 1);
-          i--;
+          j = filters.languages.length;
         }
       }
     }
@@ -458,6 +457,7 @@ function filterOffers(operation, selectedFilter) {
       for (j = 0; j < filters.tools.length; j++) {
         if (!isInArray(filteredOffers[i].tools, filters.tools[j])) {
           filteredOffers.splice(i, 1);
+          j = filters.languages.length;
         }
       }
     }
@@ -473,4 +473,5 @@ function filterOffers(operation, selectedFilter) {
   for (i = 0; i < filteredOffers.length; i++) {
     renderOffer(filteredOffers[i].id - 1);
   }
+  console.log(filters)
 } 
